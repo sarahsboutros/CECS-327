@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2619549B1D6F634700E23883 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2619549A1D6F634700E23883 /* main.cpp */; };
+		261954A21D6F635000E23883 /* ftpclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261954A11D6F635000E23883 /* ftpclient.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		261954971D6F634700E23883 /* CECS 327 - Assignment 1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CECS 327 - Assignment 1"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2619549A1D6F634700E23883 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		261954A11D6F635000E23883 /* ftpclient.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ftpclient.cpp; path = "/Users/sarahsboutros/Documents/Fall 2016/CECS 327/CECS-327/CECS 327 - Assignment 1/CECS 327 - Assignment 1/ftpclient.cpp"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,10 +57,11 @@
 		261954991D6F634700E23883 /* CECS 327 - Assignment 1 */ = {
 			isa = PBXGroup;
 			children = (
-				2619549A1D6F634700E23883 /* main.cpp */,
+				261954A11D6F635000E23883 /* ftpclient.cpp */,
 			);
-			path = "CECS 327 - Assignment 1";
-			sourceTree = "<group>";
+			name = "CECS 327 - Assignment 1";
+			path = "/Users/sarahsboutros/Documents/Fall 2016/CECS 327/CECS-327/CECS 327 - Assignment 1/CECS 327 - Assignment 1";
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -118,7 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2619549B1D6F634700E23883 /* main.cpp in Sources */,
+				261954A21D6F635000E23883 /* ftpclient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +238,7 @@
 				261954A01D6F634700E23883 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
