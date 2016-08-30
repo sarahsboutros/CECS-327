@@ -1,6 +1,6 @@
 /**
-    C++ client example using sockets
-*/
+ C++ client example using sockets
+ */
 #include <iostream>    //cout
 #include <string>
 #include <stdio.h> //printf
@@ -19,12 +19,12 @@ int createConnection(std::string host, int port)
 {
     int sock;
     struct sockaddr_in sockaddr;
-    
+
     memset(&sockaddr,0, sizeof(sockaddr));
     sock = socket(AF_INET,SOCK_STREAM,0);
     sockaddr.sin_family=AF_INET;
     sockaddr.sin_port= htons(port);
-    
+
     int a1,a2,a3,a4;
     if (sscanf(host.c_str(), "%d.%d.%d.%d", &a1, &a2, &a3, &a4 ) == 4)
     {
@@ -76,7 +76,7 @@ std::string reply(int sock)
     std::string strReply;
     int count;
     char buffer[BUFFER_LENGTH];
-    
+
     do {
         count = recv(sock, buffer, BUFFER_LENGTH-1, 0);
         buffer[count] = '\0';
@@ -89,10 +89,8 @@ int main(int argc , char *argv[])
 {
     int sockpi;
     std::string strReply;
-    
+
     //TODO  arg[1] can be a dns or an IP address using gethostbyname.
-    
-    argv[1] = gethostbyname("130.179.16.134")->h_name;
     if (argc > 2)
     {
         sockpi = createConnection(argv[1], atoi(argv[2]));
@@ -103,34 +101,52 @@ int main(int argc , char *argv[])
         sockpi = createConnection("130.179.16.134", 21);
     strReply = reply(sockpi);
     std::cout << strReply  << std::endl;
-    
-    
+
+
     strReply = requestReply(sockpi, "USER anonymous\r\n");
     //TODO parse srtReply to obtain the status. Let the system act according to the status and display
     // friendly user to the user
-    std::string status = strReply.substr(0,3);
-//    int code = std::atoi(status)
-//    switch (status) {
-//        case "":
-//            <#statements#>
-//            break;
-//            
-//        default:
-//            break;
-//    }
-    std::cout << status  << std::endl;
     std::cout << strReply  << std::endl;
-    
-    strReply = requestReply(sockpi, "PASS sarah.boutros@student.csulb.edu\r\n");
+
+    if(strReply.substr(0,3) == "331"){
+        std::cout << "#####     Username accepted     #####" << std::endl;
+    }
+
+    strReply = requestReply(sockpi, "PASS asa@asas.com\r\n");
     std::cout << strReply  << std::endl;
-//    strReply = requestReply(sockpi, "USER anonymous\r\n");
-//    std::cout << strReply  << std::endl;
-//    //TODO parse srtReply to obtain the status. Let the system act according to the status and display
+    //strReply = requestReply(sockpi, "USER anonymous\r\n");
+    //TODO parse srtReply to obtain the status. Let the system act according to the status and display
     // friendly user to the user
-    
-    
+    if(strReply.substr(0,3) == "230"){
+        std::cout << "#####     Password accepted - User is now logged in     #####" << std::endl;
+    }
+
     //TODO implement PASV, LIST, RETR
-    
-    
+
+    strReply = requestReply(sockpi, "PASV\r\n");
+    std::cout << strReply  << std::endl;
+
+    if(strReply.substr(0,3) == "227"){
+        std::cout << "#####     Entered passive mode     #####" << std::endl;
+
+        //assign PASV return value: "host.p1.p2"
+        std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
+        std::string tempPort = passiveIp.substr(passiveIp.find("134") + 4);
+
+        //get p1 and p2 port information
+        std::string p1 = tempPort.substr(0, tempPort.find(","));
+        std::string p2 = tempPort.substr(tempPort.find(",") + 1);
+
+        //convert p1 and p2 to int
+        int p1i = atoi(p1.c_str());
+        int p2i = atoi(p2.c_str());
+
+        //calculate port: p1*256+p2
+        int port = (p1i * 256 + p2i);
+
+        std::cout << port << std::endl;
+
+    }
+
     return 0;
 }
