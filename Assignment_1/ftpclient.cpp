@@ -178,8 +178,8 @@ int main(int argc , char *argv[])
             std::cout << "Which a directory do you want to list?" << std::endl;
             std::cin >> input;
             std::string list = "LIST ";
-//            list.append(input);
-            list.append(" \r\n");
+            list.append(input);
+            list.append("\r\n");
             std::cout << "Here is the list" << std::endl;
             std::cout << executeCommand(list,host,sockpi)<< std::endl;
         }
@@ -191,7 +191,7 @@ int main(int argc , char *argv[])
             std::cin >> input;
             std::string retr = "RETR ";
             retr.append(input);
-            retr.append(" \r\n");
+            retr.append("\r\n");
             std::cout << executeCommand(retr,host,sockpi) << std::endl;
         }
         else if(choice == 3)
