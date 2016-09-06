@@ -97,7 +97,7 @@ int PASV(std::string host, int sockpi)
 
         std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
         int a1,a2,a3,a4,a5,a6;
-        std::sscanf(passiveIp.c_str(), "%d,%d,%d,%d,%d,%d", &a1, &a2, &a3, &a4, &a5, &a6);
+        sscanf(passiveIp.c_str(), "%d,%d,%d,%d,%d,%d", &a1, &a2, &a3, &a4, &a5, &a6);
         port = (( a5<< 8 ) | a6);
         sockdtp = createConnection(host, port);
     }
@@ -159,9 +159,50 @@ int main(int argc , char *argv[])
     }
     
     //TODO implement PASV, LIST, RETR
-    std::cout << executeCommand("LIST pub\r\n",host,sockpi)<< std::endl;
-    std::cout << executeCommand("RETR welcome.msg\r\n",host,sockpi) << std::endl;
-//    LIST(host,sockpi);
-//    RETR("welcome.msg",host,sockpi);
-    return 0;
+//    std::cout << executeCommand("LIST pub\r\n",host,sockpi)<< std::endl;
+//    std::cout << executeCommand("RETR welcome.msg\r\n",host,sockpi) << std::endl;
+
+    int choice;
+    std::string input;
+    
+    do
+	{
+        std::cout << "1- List a directory"<< std::endl;
+        std::cout << "2- Retrieve a file"<< std::endl;
+        std::cout << "3- Exit the program "<< std::endl;
+        std::cout << "Please enter your choice numerically" << std::endl;
+        std::cin >> choice;
+        
+        if(choice == 1)
+        {
+            std::cout << "Which a directory do you want to list?" << std::endl;
+            std::cin >> input;
+            std::string list = "LIST ";
+//            list.append(input);
+            list.append(" \r\n");
+            std::cout << "Here is the list" << std::endl;
+            std::cout << executeCommand(list,host,sockpi)<< std::endl;
+        }
+        else if(choice == 2)
+        {
+            
+            std::cout << executeCommand("LIST \r\n",host,sockpi)<< std::endl;
+            std::cout << "Which file would you like to retrieve?" << std::endl;
+            std::cin >> input;
+            std::string retr = "RETR ";
+            retr.append(input);
+            retr.append(" \r\n");
+            std::cout << executeCommand(retr,host,sockpi) << std::endl;
+        }
+        else if(choice == 3)
+        {
+            std::cout << "Program Terminated "<< std::endl;
+        }
+        else
+        {
+            std::cout << "Enter a valid choice "<< std::endl;
+        }
+     } while (choice != 3);
+
+	return 0;
 }
