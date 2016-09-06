@@ -1,4 +1,4 @@
-/**
+/*
  C++ client example using sockets
  */
 #include <iostream>    //cout
@@ -13,10 +13,14 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <netdb.h>
-
+/** 
+ Buffer Length 
+ */
 
 #define BUFFER_LENGTH 2048
-//Create a connection with the Host
+/**
+ Creates a connection with the Host
+ */
 int createConnection(std::string host, int port)
 {
     int sock;
@@ -48,7 +52,9 @@ int createConnection(std::string host, int port)
     return sock;
 }
 
-//Request Reply function
+/**
+ Requests a reply from the host
+ */
 std::string requestReply(int sock, std::string message)
 {
     char buffer[BUFFER_LENGTH];
@@ -66,14 +72,20 @@ std::string requestReply(int sock, std::string message)
     return buffer;
 }
 
-//Send a Request
+
+/**
+ Sends a request to the Host
+ */
 int request(int sock, std::string message)
 {
     char buffer[BUFFER_LENGTH];
     std::string reply;
     return send(sock, message.c_str(), message.size(), 0);
 }
-//Listen for Reply
+
+/**
+ Sends a Reply to the Host
+ */
 std::string reply(int sock)
 {
     std::string strReply;
@@ -87,7 +99,10 @@ std::string reply(int sock)
     }while (count ==  0); // BUFFER_LENGTH-1);
     return strReply;
 }
-//Passive Mode
+
+/**
+ Enters Passive Mode so Client can receive information
+ */
 int PASV(std::string host, int sockpi)
 {
     std::string strReply = requestReply(sockpi, "PASV \r\n");
@@ -103,7 +118,10 @@ int PASV(std::string host, int sockpi)
     }
     return sockdtp;
 }
-//Execute Command
+
+/**
+ Executes command user inputs
+ */
 std::string executeCommand(std::string command,std::string host, int sockpi )
 {
     std::string strReply,strReply_d;
@@ -120,7 +138,10 @@ std::string executeCommand(std::string command,std::string host, int sockpi )
 }
 
 
-// Main
+
+/**
+ Main
+ */
 int main(int argc , char *argv[])
 {
     int sockpi;
