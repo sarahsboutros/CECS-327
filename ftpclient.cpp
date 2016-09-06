@@ -29,7 +29,7 @@ int createConnection(std::string host, int port)
     int a1,a2,a3,a4;
     if (sscanf(host.c_str(), "%d.%d.%d.%d", &a1, &a2, &a3, &a4 ) == 4)
     {
-        std::cout << "by ip";
+        std::cout << "by ip\n";
         sockaddr.sin_addr.s_addr =  inet_addr(host.c_str());
     }
     else {
@@ -89,6 +89,8 @@ std::string reply(int sock)
 int main(int argc , char *argv[])
 {
     int sockpi;
+    int sockdtp;
+    int port;
     std::string strReply;
     
     //TODO  arg[1] can be a dns or an IP address using gethostbyname.
@@ -143,15 +145,58 @@ int main(int argc , char *argv[])
         int p2i = atoi(p2.c_str());
         
         //bitwise shift with an or
-        int port = ((p1i << 8 ) | p2i);
+        port = ((p1i << 8 ) | p2i);
         
-        std::cout << port << std::endl;
+        //std::cout << port << std::endl;
         
-        sockpi = createConnection("130.179.16.134", port);
+        sockdtp = createConnection("130.179.16.134", port);
         
+        strReply = requestReply(sockpi, "LIST\r\n");
+        std::cout << strReply << std::endl;
         
+        strReply = reply(sockdtp);
+        
+        std::cout << strReply << std::endl;
+        close(sockdtp);
         
     }
     
+   
+    
+
+    
+    
+    strReply = requestReply(sockpi, "PASV \r\n");
+    std::cout << strReply  << std::endl;
+    
+    if(strReply.substr(0,3) == "227"){
+        std::cout << "#####     Entered passive mode     #####" << std::endl;
+        
+        //assign PASV return value: "host.p1.p2"
+        std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
+        std::string tempPort = passiveIp.substr(passiveIp.find("134") + 4);
+        
+        //get p1 and p2 port information
+        std::string p1 = tempPort.substr(0, tempPort.find(","));
+        std::string p2 = tempPort.substr(tempPort.find(",") + 1);
+        
+        //convert p1 and p2 to int
+        int p1i = atoi(p1.c_str());
+        int p2i = atoi(p2.c_str());
+        
+        //bitwise shift with an or
+        port = ((p1i << 8 ) | p2i);
+        
+        //std::cout << port << std::endl;
+        
+        
+        sockdtp = createConnection("130.179.16.134", port);
+        
+        strReply = requestReply(sockpi,"RETR welcome.msg\r\n");
+    
+        strReply = reply(sockdtp);
+        std::cout << strReply << std::endl;
+        
+    }
     return 0;
 }
