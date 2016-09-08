@@ -1,8 +1,11 @@
-/**
-
+/*
+ Sarah Boutros
+ Mehmet Ustun
+ Evan Medley
  */
 #include <iostream>    //cout
 #include <string>
+#include <sstream>
 #include <stdio.h> //printf
 #include <stdlib.h>
 #include <string.h>    //strlen
@@ -12,10 +15,14 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <netdb.h>
-
+/** 
+ Buffer Length 
+ */
 
 #define BUFFER_LENGTH 2048
-
+/**
+ Creates a connection with the Host
+ */
 int createConnection(std::string host, int port)
 {
     int sock;
@@ -47,6 +54,9 @@ int createConnection(std::string host, int port)
     return sock;
 }
 
+/**
+ Requests a reply from the host
+ */
 std::string requestReply(int sock, std::string message)
 {
     char buffer[BUFFER_LENGTH];
@@ -65,6 +75,9 @@ std::string requestReply(int sock, std::string message)
 }
 
 
+/**
+ Sends a request to the Host
+ */
 int request(int sock, std::string message)
 {
     char buffer[BUFFER_LENGTH];
@@ -72,6 +85,9 @@ int request(int sock, std::string message)
     return send(sock, message.c_str(), message.size(), 0);
 }
 
+/**
+ Sends a Reply to the Host
+ */
 std::string reply(int sock)
 {
     std::string strReply;
@@ -86,15 +102,55 @@ std::string reply(int sock)
     return strReply;
 }
 
+/**
+ Enters Passive Mode so Client can receive information
+ */
+int PASV(std::string host, int sockpi)
+{
+    std::string strReply = requestReply(sockpi, "PASV \r\n");
+    int port,sockdtp;
+    if(strReply.substr(0,3) == "227"){
+        std::cout << "#####     Entered passive mode     #####" << std::endl;
+
+        std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
+        int a1,a2,a3,a4,a5,a6;
+        sscanf(passiveIp.c_str(), "%d,%d,%d,%d,%d,%d", &a1, &a2, &a3, &a4, &a5, &a6);
+        port = (( a5<< 8 ) | a6);
+        sockdtp = createConnection(host, port);
+    }
+    return sockdtp;
+}
+
+/**
+ Executes command user inputs
+ */
+std::string executeCommand(std::string command,std::string host, int sockpi )
+{
+    std::string strReply,strReply_d;
+    int sockdtp;
+    sockdtp = PASV(host,sockpi);
+    strReply = requestReply(sockpi,command);
+    std::cout << strReply << std::endl;
+    strReply_d = reply(sockdtp);
+    std::cout << strReply << std::endl;
+    close(sockdtp);
+    strReply = reply(sockpi);
+    std::cout << strReply << std::endl;
+    return strReply_d;
+}
+
+
+
+/**
+ Main
+ */
 int main(int argc , char *argv[])
 {
     int sockpi;
-    int sockdtp;
-    int port;
     std::string strReply;
-    
+    std::string host = "130.179.16.134";
     //TODO  arg[1] can be a dns or an IP address using gethostbyname.
-    argv[1] = gethostbyname("130.179.16.134")->h_name;
+    argv[1] = gethostbyname(host.c_str())->h_name;
     if (argc > 2)
     {
         sockpi = createConnection(argv[1], atoi(argv[2]));
@@ -126,77 +182,52 @@ int main(int argc , char *argv[])
     }
     
     //TODO implement PASV, LIST, RETR
-    strReply = requestReply(sockpi, "PASV \r\n");
-    std::cout << strReply  << std::endl;
-    
-    if(strReply.substr(0,3) == "227"){
-        std::cout << "#####     Entered passive mode     #####" << std::endl;
-        
-        //assign PASV return value: "host.p1.p2"
-        std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
-        std::string tempPort = passiveIp.substr(passiveIp.find("134") + 4);
-        
-        //get p1 and p2 port information
-        std::string p1 = tempPort.substr(0, tempPort.find(","));
-        std::string p2 = tempPort.substr(tempPort.find(",") + 1);
-        
-        //convert p1 and p2 to int
-        int p1i = atoi(p1.c_str());
-        int p2i = atoi(p2.c_str());
-        
-        //bitwise shift with an or
-        port = ((p1i << 8 ) | p2i);
-        
-        //std::cout << port << std::endl;
-        
-        sockdtp = createConnection("130.179.16.134", port);
-        
-        strReply = requestReply(sockpi, "LIST\r\n");
-        std::cout << strReply << std::endl;
-        
-        strReply = reply(sockdtp);
-        
-        std::cout << strReply << std::endl;
-        close(sockdtp);
-        
-    }
-    
-   
-    
+//    std::cout << executeCommand("LIST pub\r\n",host,sockpi)<< std::endl;
+//    std::cout << executeCommand("RETR welcome.msg\r\n",host,sockpi) << std::endl;
 
+    int choice;
+    std::string input;
     
-    
-    strReply = requestReply(sockpi, "PASV \r\n");
-    std::cout << strReply  << std::endl;
-    
-    if(strReply.substr(0,3) == "227"){
-        std::cout << "#####     Entered passive mode     #####" << std::endl;
+    do
+	{
+        std::cout << "1- List a directory"<< std::endl;
+        std::cout << "2- Retrieve a file"<< std::endl;
+        std::cout << "3- Exit the program "<< std::endl;
+        std::cout << "Please enter your choice numerically" << std::endl;
+        std::cin >> choice;
         
-        //assign PASV return value: "host.p1.p2"
-        std::string passiveIp = strReply.substr(strReply.find('(') + 1, (strReply.find(')') - strReply.find('(') - 1));
-        std::string tempPort = passiveIp.substr(passiveIp.find("134") + 4);
-        
-        //get p1 and p2 port information
-        std::string p1 = tempPort.substr(0, tempPort.find(","));
-        std::string p2 = tempPort.substr(tempPort.find(",") + 1);
-        
-        //convert p1 and p2 to int
-        int p1i = atoi(p1.c_str());
-        int p2i = atoi(p2.c_str());
-        
-        //bitwise shift with an or
-        port = ((p1i << 8 ) | p2i);
-        
-        //std::cout << port << std::endl;
-        
-        
-        sockdtp = createConnection("130.179.16.134", port);
-        
-        strReply = requestReply(sockpi,"RETR welcome.msg\r\n");
-    
-        strReply = reply(sockdtp);
-        std::cout << strReply << std::endl;
-        
-    }
-    return 0;
+        if(choice == 1)
+        {
+            std::cout << "Which a directory do you want to list?" << std::endl;
+            std::cin >> input;
+            std::string list = "LIST ";
+            list.append(input);
+            list.append("\r\n");
+            std::cout << "Here is the list" << std::endl;
+            std::cout << executeCommand(list,host,sockpi)<< std::endl;
+        }
+        else if(choice == 2)
+        {
+            
+            std::cout << executeCommand("LIST \r\n",host,sockpi)<< std::endl;
+            std::cout << "Which file would you like to retrieve?" << std::endl;
+            std::cin >> input;
+            std::string retr = "RETR ";
+            retr.append(input);
+            retr.append("\r\n");
+            std::cout << executeCommand(retr,host,sockpi) << std::endl;
+        }
+        else if(choice == 3)
+        {
+            std::cout << "Program Terminated "<< std::endl;
+            strReply = requestReply(sockpi, "QUIT\r\n");
+            std::cout << strReply << std::endl;
+        }
+        else
+        {
+            std::cout << "Enter a valid choice "<< std::endl;
+        }
+     } while (choice != 3);
+
+	return 0;
 }
