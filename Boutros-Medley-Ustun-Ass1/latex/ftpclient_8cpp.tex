@@ -1,0 +1,91 @@
+\hypertarget{ftpclient_8cpp}{}\section{/\+Users/sarahsboutros/\+Documents/\+Fall 2016/\+C\+E\+CS 327/\+C\+E\+C\+S-\/327/\+Assignment\+\_\+1/ftpclient.cpp File Reference}
+\label{ftpclient_8cpp}\index{/\+Users/sarahsboutros/\+Documents/\+Fall 2016/\+C\+E\+C\+S 327/\+C\+E\+C\+S-\/327/\+Assignment\+\_\+1/ftpclient.\+cpp@{/\+Users/sarahsboutros/\+Documents/\+Fall 2016/\+C\+E\+C\+S 327/\+C\+E\+C\+S-\/327/\+Assignment\+\_\+1/ftpclient.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{ftpclient_8cpp_af7b7dc9a200cb1404c280bd500fd1551}{B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}~2048
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{ftpclient_8cpp_a24afbbf563bda14636d60fef55726742}{create\+Connection} (std\+::string host, int port)
+\item 
+std\+::string \hyperlink{ftpclient_8cpp_a9e9355757bb47da39f1d944a48ab90d7}{request\+Reply} (int sock, std\+::string message)
+\item 
+int \hyperlink{ftpclient_8cpp_ac2aa65001102647fd5589df6bcfe9a03}{request} (int sock, std\+::string message)
+\item 
+std\+::string \hyperlink{ftpclient_8cpp_accf1aa7a5c2f6ea25e750abf72e4cac8}{reply} (int sock)
+\item 
+int \hyperlink{ftpclient_8cpp_a0a61ad6622c8ce44b98808196b6d78af}{P\+A\+SV} (std\+::string host, int sockpi)
+\item 
+std\+::string \hyperlink{ftpclient_8cpp_a641b6517b94f018f920baa3a89d94916}{execute\+Command} (std\+::string command, std\+::string host, int sockpi)
+\item 
+int \hyperlink{ftpclient_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{ftpclient_8cpp_af7b7dc9a200cb1404c280bd500fd1551}{}\label{ftpclient_8cpp_af7b7dc9a200cb1404c280bd500fd1551} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH@{B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}}
+\index{B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH@{B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}{BUFFER\_LENGTH}}
+{\footnotesize\ttfamily \#define B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH~2048}
+
+Buffer Length 
+
+\subsection{Function Documentation}
+\hypertarget{ftpclient_8cpp_a24afbbf563bda14636d60fef55726742}{}\label{ftpclient_8cpp_a24afbbf563bda14636d60fef55726742} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!create\+Connection@{create\+Connection}}
+\index{create\+Connection@{create\+Connection}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{create\+Connection()}{createConnection()}}
+{\footnotesize\ttfamily int create\+Connection (\begin{DoxyParamCaption}\item[{std\+::string}]{host,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+Creates a connection with the Host \hypertarget{ftpclient_8cpp_a641b6517b94f018f920baa3a89d94916}{}\label{ftpclient_8cpp_a641b6517b94f018f920baa3a89d94916} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!execute\+Command@{execute\+Command}}
+\index{execute\+Command@{execute\+Command}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{execute\+Command()}{executeCommand()}}
+{\footnotesize\ttfamily std\+::string execute\+Command (\begin{DoxyParamCaption}\item[{std\+::string}]{command,  }\item[{std\+::string}]{host,  }\item[{int}]{sockpi }\end{DoxyParamCaption})}
+
+Executes command user inputs \hypertarget{ftpclient_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{}\label{ftpclient_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!main@{main}}
+\index{main@{main}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Main \hypertarget{ftpclient_8cpp_a0a61ad6622c8ce44b98808196b6d78af}{}\label{ftpclient_8cpp_a0a61ad6622c8ce44b98808196b6d78af} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!P\+A\+SV@{P\+A\+SV}}
+\index{P\+A\+SV@{P\+A\+SV}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{P\+A\+S\+V()}{PASV()}}
+{\footnotesize\ttfamily int P\+A\+SV (\begin{DoxyParamCaption}\item[{std\+::string}]{host,  }\item[{int}]{sockpi }\end{DoxyParamCaption})}
+
+Enters Passive Mode so Client can receive information \hypertarget{ftpclient_8cpp_accf1aa7a5c2f6ea25e750abf72e4cac8}{}\label{ftpclient_8cpp_accf1aa7a5c2f6ea25e750abf72e4cac8} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!reply@{reply}}
+\index{reply@{reply}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{reply()}{reply()}}
+{\footnotesize\ttfamily std\+::string reply (\begin{DoxyParamCaption}\item[{int}]{sock }\end{DoxyParamCaption})}
+
+Sends a Reply to the Host \hypertarget{ftpclient_8cpp_ac2aa65001102647fd5589df6bcfe9a03}{}\label{ftpclient_8cpp_ac2aa65001102647fd5589df6bcfe9a03} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!request@{request}}
+\index{request@{request}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{request()}{request()}}
+{\footnotesize\ttfamily int request (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+Sends a request to the Host \hypertarget{ftpclient_8cpp_a9e9355757bb47da39f1d944a48ab90d7}{}\label{ftpclient_8cpp_a9e9355757bb47da39f1d944a48ab90d7} 
+\index{ftpclient.\+cpp@{ftpclient.\+cpp}!request\+Reply@{request\+Reply}}
+\index{request\+Reply@{request\+Reply}!ftpclient.\+cpp@{ftpclient.\+cpp}}
+\subsubsection{\texorpdfstring{request\+Reply()}{requestReply()}}
+{\footnotesize\ttfamily std\+::string request\+Reply (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+Requests a reply from the host 
