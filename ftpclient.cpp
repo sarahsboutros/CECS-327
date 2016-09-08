@@ -1,5 +1,5 @@
 /**
- C++ client example using sockets
+
  */
 #include <iostream>    //cout
 #include <string>

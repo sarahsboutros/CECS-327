@@ -1,5 +1,7 @@
 /*
- C++ client example using sockets
+ Sarah Boutros
+ Mehmet Ustun
+ Evan Medley
  */
 #include <iostream>    //cout
 #include <string>
