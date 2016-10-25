@@ -20,7 +20,7 @@ public class ChordUser
 	      
 		Chord    chord = new Chord(port);
 		System.out.println("Usage: \n\tjoin <port>\n\twrite <file> (the file must be an integer stored in the working directory, i.e, ./port/file");
-		System.out.println("\tread <file>\n\tdelete <file>\n\tprint");
+		System.out.println("\tread <file>\n\tdelete <file>\n\tprint <file>\n\leave");
         
 		Scanner scan= new Scanner(System.in);
 		String delims = "[ ]+";

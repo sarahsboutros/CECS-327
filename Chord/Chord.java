@@ -144,7 +144,34 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
             successor = this;
         }   
     }
-    
+
+    public void leaveRing()
+    {
+        Path path = Paths.get("./"
+                    + this.getId() + "/repository/" );
+            
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+                for (Path file: stream)
+                {
+                     if(!(new File(path+file.toString()).isHidden())) {
+                    int key = Integer.parseInt(file.getFileName().toString());
+                    System.out.println(file.getFileName());
+                     
+                    
+                    if(key > 0 && isKeyInSemiCloseInterval(key,j.getId(),i))
+                    {
+                        successor.put(key,get(key));
+                    }
+                     }
+                }
+            } catch (IOException | DirectoryIteratorException x) {
+                // IOException can never be thrown by the iteration.
+                // In this snippet, it can only be thrown by newDirectoryStream.
+                System.err.println(x);
+            }
+        ((Chord) predecessor).successor = successor;
+        ((Chord) successor).predecessor = predecessor;
+    } 
     public void findingNextSuccessor()
     {
 	int i;
