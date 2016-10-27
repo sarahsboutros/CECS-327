@@ -85,6 +85,15 @@ public class ChordUser
 			      System.out.println("Could not delete file!");
 			}
 		    }
+			if (token[0].equals("leave"))
+			{
+				try {
+				chord.leaveRing();
+				} catch(IOException e)
+				{
+			
+				}
+			}
 		  }
 		}
 		catch(RemoteException e)

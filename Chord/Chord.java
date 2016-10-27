@@ -158,7 +158,7 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
                     System.out.println(file.getFileName());
                      
                     
-                    if(key > 0 && isKeyInSemiCloseInterval(key,j.getId(),i))
+                    if(key > 0)
                     {
                         successor.put(key,get(key));
                     }
@@ -169,9 +169,20 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
                 // In this snippet, it can only be thrown by newDirectoryStream.
                 System.err.println(x);
             }
-        ((Chord) predecessor).successor = successor;
-        ((Chord) successor).predecessor = predecessor;
+        predecessor.setSuccessor(successor);
+        successor.setPredeccesor(predecessor);
+
     } 
+
+    public void setPredecesor(ChordMessageInterface m)
+    {
+        this.predecessor = m;
+    }
+
+    public void setSuccessor(ChordMessageInterface m)
+    {
+        this.successor = m;
+    }
     public void findingNextSuccessor()
     {
 	int i;
