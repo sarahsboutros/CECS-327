@@ -7,9 +7,6 @@ public interface ChordMessageInterface extends Remote
     ChordMessageInterface locateSuccessor(int key) throws RemoteException;
     ChordMessageInterface closestPrecedingNode(int key) throws RemoteException;
     public void joinRing(String Ip, int port)  throws RemoteException;
-    public void leaveRing()  throws RemoteException;
-    public void setSuccessor(ChordMessageInterface p) throws RemoteException;
-    public void setPredeccesor(ChordMessageInterface s) throws RemoteException;
     public void notify(ChordMessageInterface j) throws RemoteException;
     public boolean isAlive() throws RemoteException;
     public int getId() throws RemoteException;

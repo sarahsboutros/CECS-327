@@ -9,8 +9,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.rmi.MarshalException;
-import java.io.FileInputStream;
  
 public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordMessageInterface
 {
@@ -56,34 +54,36 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
     
     
-    public void put(int guid, InputStream file) throws RemoteException, FileNotFoundException, IOException {
+    public void put(int guid, InputStream stream) throws RemoteException {
 	 //TODO Store the file at ./port/repository/guid
-         FileOutputStream o;
-         String path = "./" 
-                 + this.getId() + "/repository/" + guid;
-         o = new FileOutputStream(path);
-         while(file.available() > 0) {
-         o.write(file.read());
-         }
+      try {
+	 String fileName = "./"+i+"/repository/" + guid;
+	 FileOutputStream output = new FileOutputStream(fileName);
+	 while (stream.available() > 0)
+	    output.write(stream.read());
+       } catch (IOException e)
+       {
+	  System.out.println(e);
+       } 
     }
     
     
-    public InputStream get(int guid) throws RemoteException, FileNotFoundException, IOException {
-         String path = "./" 
-                 + this.getId() + "/repository/" + guid;
-         //TODO get  the file ./port/repository/guid
-         FileStream f = new FileStream(path);
-        return f;       
+    public InputStream get(int guid) throws RemoteException {
+	 String fileName = "./"+i+"/repository/" + guid;
+	 FileStream file= null;
+	 try{
+	   file = new FileStream(fileName);
+	 } catch (Exception e) {
+	    e.printStackTrace();
+	}
+        return file;        
     }
     
     public void delete(int guid) throws RemoteException {
-          //TODO delet the file ./port/repository/guid
-         String path = "./" 
-                 + this.getId() + "/repository/" + guid;
-          File f = new File(path);
-          if(f.exists()) {
-              f.delete();
-          }
+	  String fileName = "./"+i+"/repository/" + guid;
+
+          File file = new File(fileName);
+	  file.delete();
     }
     
     public int getId() throws RemoteException {
@@ -98,14 +98,15 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
     
     public ChordMessageInterface locateSuccessor(int key) throws RemoteException {
-	if (key == i)
+	    if (key == i)
             throw new IllegalArgumentException("Key must be distinct that  " + i);
-	if (successor.getId() != i) {
+	    if (successor.getId() != i)
+	    {
 	      if (isKeyInSemiCloseInterval(key, i, successor.getId()))
 	        return successor;
 	      ChordMessageInterface j = closestPrecedingNode(key);
 	      
-              if (j == null)
+          if (j == null)
 	        return null;
 	      return j.locateSuccessor(key);
         }
@@ -113,21 +114,13 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
     
     public ChordMessageInterface closestPrecedingNode(int key) throws RemoteException {
-	 if (key == i)
-            throw new IllegalArgumentException("Key must be distinct that " + i);
-        if(predecessor.getId() != i)
-        {
-            if (isKeyInSemiCloseInterval(key,predecessor.getId(), i))
-            {
-                return predecessor;
-            }
-            else {
-                ChordMessageInterface j = new Chord(key);
-                notify(j);
-                predecessor.closestPrecedingNode(key);
-            }
+	int count = M-1;	
+	if (key == i)  throw new IllegalArgumentException("Key must be distinct that  " + i);	
+	for (count = M-1; count >= 0; count--) {
+	  if (finger[count] != null && isKeyInOpenInterval(finger[count].getId(), i, key)) 
+	      return finger[count];
         }
-        return predecessor;
+        return successor;
 
     }
     
@@ -144,46 +137,7 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
             successor = this;
         }   
     }
-
-    public void leaveRing() throws RemoteException
-    {
-        Path path = Paths.get("./"
-                    + this.getId() + "/repository/" );
-            
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
-                for (Path file: stream)
-                {
-                     if(!(new File(path+file.toString()).isHidden())) {
-                    int key = Integer.parseInt(file.getFileName().toString());
-                    System.out.println(file.getFileName());
-                     
-                    
-                    if(key > 0)
-                    {
-                        successor.put(key,get(key));
-                    }
-                     }
-                }
-            } catch (IOException | DirectoryIteratorException x) {
-                // IOException can never be thrown by the iteration.
-                // In this snippet, it can only be thrown by newDirectoryStream.
-                System.err.println(x);
-            }
-        predecessor.setSuccessor(successor);
-        successor.setPredeccesor(predecessor);
-        System.exit(0);
-
-    } 
-
-    public void setPredeccesor(ChordMessageInterface m)
-    {
-        this.predecessor = m;
-    }
-
-    public void setSuccessor(ChordMessageInterface m)
-    {
-        this.successor = m;
-    }
+    
     public void findingNextSuccessor()
     {
 	int i;
@@ -229,10 +183,11 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
     
     public void notify(ChordMessageInterface j) throws RemoteException {
-         if (predecessor == null || (predecessor != null && isKeyInOpenInterval(j.getId(), predecessor.getId(), i)))
-        {    // TODO
-            //transfer keys in the range [j,i) to j;
-            Path path = Paths.get("./"
+         if (predecessor == null || (predecessor != null && 
+                 isKeyInOpenInterval(j.getId(), predecessor.getId(), i))){
+	 // TODO 
+	 //transfer keys in the range [j,i) to j;
+             Path path = Paths.get("./"
                     + this.getId() + "/repository/" );
             
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
@@ -255,8 +210,9 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
                 System.err.println(x);
             }
          
-        }
-         predecessor = j;
+         }
+             
+	 predecessor = j;
     }
     
     public void fixFingers() {
