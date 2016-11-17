@@ -4,13 +4,15 @@ import java.rmi.server.*;
 import java.net.*;
 import java.util.*;
 import java.io.*;
+import java.math.BigInteger;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.*;
  
-public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordMessageInterface
+public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordMessageInterface, AtomicCommitInterface
 {
     public static final int M = 2;
     
@@ -21,7 +23,21 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     int nextFinger;
     int i;   		// GUID
     
-    
+    public void write(String f, Chord c) throws IOException, NoSuchAlgorithmException {
+	String path = "./"+  c.i +"/repository/"+f; // path to file
+	FileStream file = new FileStream(path);
+	ChordMessageInterface peer = c.locateSuccessor(Integer.parseInt(f));
+	peer.put(md5(f), file); // put file into ring
+    }
+    public int md5(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        int m = Integer.parseInt(s);
+        /*byte[] b = s.getBytes("UTF-8");
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        b = md5.digest(b);
+        
+        */
+        return m;
+    }
     public ChordMessageInterface rmiChord(String ip, int port)
     {	
         ChordMessageInterface chord = null;
@@ -300,6 +316,32 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         catch(RemoteException e){
 	       System.out.println("Cannot retrive id");
         } 
+    }
+
+    @Override
+    public boolean canCommit(Transaction t) throws RemoteException {
+        Long date = new Date().getTime();
+        return t.TransactionId.longValue() < date;
+    }
+
+    @Override
+    public void doCommit(Transaction t) throws RemoteException {
+        
+    }
+
+    @Override
+    public void doAbort(Transaction t) throws RemoteException {
+        
+    }
+
+    @Override
+    public boolean haveCommitted(Transaction t, Transaction p) throws RemoteException {
+        return t.TransactionId.longValue() < p.TransactionId.longValue();
+    }
+
+    @Override
+    public boolean getDecision(Transaction t) throws RemoteException {
+        return false;
     }
    
 }

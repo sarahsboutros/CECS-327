@@ -40,19 +40,22 @@ public class ChordUser
 			chord.Print();
 		    }
 		    if  (tokens[0].equals("write") && tokens.length == 2) {
-			
 			try {	
-				int guid = Integer.parseInt(tokens[1]);
-				// If you are using windows you have to use
-// 				path = ".\\"+  port +"\\"+Integer.parseInt(tokens[1]); // path to file
-//                              "./"+i+"/repository/" + guid;
-				String path = "./"+  port +"/repository/"+guid; // path to file
-				FileStream file = new FileStream(path);
-				ChordMessageInterface peer = chord.locateSuccessor(guid);
-				peer.put(guid, file); // put file into ring
+				//int guid = Integer.parseInt(tokens[1]);
+                                chord.write(tokens[1], chord);
+//                                
+//				// If you are using windows you have to use
+//// 				path = ".\\"+  port +"\\"+Integer.parseInt(tokens[1]); // path to file
+////                              "./"+i+"/repository/" + guid;
+//				String path = "./"+  port +"/repository/"+guid; // path to file
+//				FileStream file = new FileStream(path);
+//				ChordMessageInterface peer = chord.locateSuccessor(guid);
+//				peer.put(guid, file); // put file into ring
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
+                        //Transaction t = new Transaction(Operation.WRITE);
+                        
 		    }
 		    if  (tokens[0].equals("read") && tokens.length == 2) {
 			try {	
