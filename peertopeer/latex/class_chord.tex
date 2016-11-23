@@ -1,0 +1,363 @@
+\hypertarget{class_chord}{}\section{Chord Class Reference}
+\label{class_chord}\index{Chord@{Chord}}
+Inheritance diagram for Chord\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_chord}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{class_chord_a2fd46745a549fb8447f2cb7e32e8b07b}{rmi\+Chord} (String ip, int port)
+\begin{DoxyCompactList}\small\item\em Makes the \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} object accessable remotely. \end{DoxyCompactList}\item 
+Boolean \hyperlink{class_chord_ad88edc3a01395c31dd0ae209195a2e08}{is\+Key\+In\+Semi\+Close\+Interval} (int key, int key1, int key2)
+\begin{DoxyCompactList}\small\item\em Checks if the Key is in a Semi Close interval. \end{DoxyCompactList}\item 
+Boolean \hyperlink{class_chord_a711a8c4e621940da4c48c1ba60479bd7}{is\+Key\+In\+Open\+Interval} (int key, int key1, int key2)
+\begin{DoxyCompactList}\small\item\em Checks if the key is in Open Interval. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a88829ad2bea7d036256fd55dab5945fd}{put} (int guid, Input\+Stream file)  throws Remote\+Exception, File\+Not\+Found\+Exception, I\+O\+Exception 
+\begin{DoxyCompactList}\small\item\em Gets the file and puts it in my repository. \end{DoxyCompactList}\item 
+Input\+Stream \hyperlink{class_chord_a0425685114bc996226e87f417221c213}{get} (int guid)  throws Remote\+Exception, File\+Not\+Found\+Exception, I\+O\+Exception 
+\begin{DoxyCompactList}\small\item\em Retrieves the file from my repository. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a83d9245c283baf440dc847cee154c8c6}{delete} (int guid)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Deletes the file form my repository. \end{DoxyCompactList}\item 
+int \hyperlink{class_chord_a7c6a50aff653bafc040f923c93061bdb}{get\+Id} ()  throws Remote\+Exception 
+\item 
+boolean \hyperlink{class_chord_a0a677ced19cc0cb5afd2a695977aeb95}{is\+Alive} ()  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Returns if I\textquotesingle{}m alive. \end{DoxyCompactList}\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{class_chord_a3f1aadce3820e808c80662bb61a58e34}{get\+Predecessor} ()  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Returns predecessor. \end{DoxyCompactList}\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{class_chord_aa53f4f7c97122395a33d064460538db0}{locate\+Successor} (int key)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Locates successor. \end{DoxyCompactList}\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{class_chord_a77a9443c945cf5482f59edf685c1dc70}{closest\+Preceding\+Node} (int key)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Locates closest Preceding Node. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_ace0b8d2768590d7527af155c6573cae7}{join\+Ring} (String ip, int port)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Joins the ring. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_aa1906d1d721280b3a10a7754f604990a}{leave\+Ring} ()  throws Remote\+Exception     
+\begin{DoxyCompactList}\small\item\em Leaves the ring. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a03cd68070e7cf5a96e015773df7ab034}{set\+Predeccesor} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} m)
+\begin{DoxyCompactList}\small\item\em Sets Predecessor. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a7de61846981d5fd1b7a9b8a6c653dc76}{set\+Successor} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} m)
+\begin{DoxyCompactList}\small\item\em Sets Successor. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a65c855dc1d8c6a82545899cb823dba2e}{finding\+Next\+Successor} ()
+\begin{DoxyCompactList}\small\item\em Find Next Successor. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a8a4b7a1cd88cb3f607ada0629f2ff2dd}{stabilize} ()
+\begin{DoxyCompactList}\small\item\em Stabilizes the successor and make sure that files in the repository are up to date. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a4de8b8464782dd96d88deeb35b2f27a2}{notify} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} j)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em Notify checks if my predecessor is null or if its an open interval with j and i if it is true for either then it copies those files to j\textquotesingle{}s repository. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a02763f74bbd986baa7e6567bf9dc3c95}{fix\+Fingers} ()
+\begin{DoxyCompactList}\small\item\em Fixes the fingers so that they are up to date. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a530b2ab58c9f4026dadf4293c38c4450}{check\+Predecessor} ()
+\begin{DoxyCompactList}\small\item\em Check Predecessor is alive otherwise set it to null. \end{DoxyCompactList}\item 
+\hyperlink{class_chord_aed079e86ebb63da4af055ca324a74274}{Chord} (int port)  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_chord}{Chord} Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_chord_a8616150947d5fa4095187325bc9f8a60}{shutdown} ()  throws Remote\+Exception 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_shutdown}{Shutdown} Function for Control + C command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static final int \hyperlink{class_chord_a864e0b4011dc157c78a06dd951c6d9ac}{M} = 2
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_shutdown}{Shutdown} \hyperlink{class_chord_a41961ec2d829d7a2c765fe7f8a23a64c}{shutdown}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_chord_aed079e86ebb63da4af055ca324a74274}{}\label{class_chord_aed079e86ebb63da4af055ca324a74274} 
+\index{Chord@{Chord}!Chord@{Chord}}
+\index{Chord@{Chord}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{Chord()}{Chord()}}
+{\footnotesize\ttfamily Chord.\+Chord (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+\hyperlink{class_chord}{Chord} Constructor. 
+
+create the registry and bind the name and object. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_chord_a530b2ab58c9f4026dadf4293c38c4450}{}\label{class_chord_a530b2ab58c9f4026dadf4293c38c4450} 
+\index{Chord@{Chord}!check\+Predecessor@{check\+Predecessor}}
+\index{check\+Predecessor@{check\+Predecessor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{check\+Predecessor()}{checkPredecessor()}}
+{\footnotesize\ttfamily void Chord.\+check\+Predecessor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check Predecessor is alive otherwise set it to null. 
+
+\hypertarget{class_chord_a77a9443c945cf5482f59edf685c1dc70}{}\label{class_chord_a77a9443c945cf5482f59edf685c1dc70} 
+\index{Chord@{Chord}!closest\+Preceding\+Node@{closest\+Preceding\+Node}}
+\index{closest\+Preceding\+Node@{closest\+Preceding\+Node}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{closest\+Preceding\+Node()}{closestPrecedingNode()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord.\+closest\+Preceding\+Node (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Locates closest Preceding Node. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a7f47e9d5144a2af6904135bc05dfe8fd}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a83d9245c283baf440dc847cee154c8c6}{}\label{class_chord_a83d9245c283baf440dc847cee154c8c6} 
+\index{Chord@{Chord}!delete@{delete}}
+\index{delete@{delete}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily void Chord.\+delete (\begin{DoxyParamCaption}\item[{int}]{guid }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Deletes the file form my repository. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_ab4d46beae8cea347c827b5618ea16104}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a65c855dc1d8c6a82545899cb823dba2e}{}\label{class_chord_a65c855dc1d8c6a82545899cb823dba2e} 
+\index{Chord@{Chord}!finding\+Next\+Successor@{finding\+Next\+Successor}}
+\index{finding\+Next\+Successor@{finding\+Next\+Successor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{finding\+Next\+Successor()}{findingNextSuccessor()}}
+{\footnotesize\ttfamily void Chord.\+finding\+Next\+Successor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Find Next Successor. 
+
+\hypertarget{class_chord_a02763f74bbd986baa7e6567bf9dc3c95}{}\label{class_chord_a02763f74bbd986baa7e6567bf9dc3c95} 
+\index{Chord@{Chord}!fix\+Fingers@{fix\+Fingers}}
+\index{fix\+Fingers@{fix\+Fingers}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{fix\+Fingers()}{fixFingers()}}
+{\footnotesize\ttfamily void Chord.\+fix\+Fingers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fixes the fingers so that they are up to date. 
+
+\hypertarget{class_chord_a0425685114bc996226e87f417221c213}{}\label{class_chord_a0425685114bc996226e87f417221c213} 
+\index{Chord@{Chord}!get@{get}}
+\index{get@{get}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily Input\+Stream Chord.\+get (\begin{DoxyParamCaption}\item[{int}]{guid }\end{DoxyParamCaption}) throws Remote\+Exception, File\+Not\+Found\+Exception, I\+O\+Exception}
+
+
+
+Retrieves the file from my repository. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a4cdb461c48fe643f4fb5fa420d017eb3}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a7c6a50aff653bafc040f923c93061bdb}{}\label{class_chord_a7c6a50aff653bafc040f923c93061bdb} 
+\index{Chord@{Chord}!get\+Id@{get\+Id}}
+\index{get\+Id@{get\+Id}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{get\+Id()}{getId()}}
+{\footnotesize\ttfamily int Chord.\+get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+Returns my Id 
+
+Implements \hyperlink{interface_chord_message_interface_acead95d9a7196f05b656462ab78138eb}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a3f1aadce3820e808c80662bb61a58e34}{}\label{class_chord_a3f1aadce3820e808c80662bb61a58e34} 
+\index{Chord@{Chord}!get\+Predecessor@{get\+Predecessor}}
+\index{get\+Predecessor@{get\+Predecessor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{get\+Predecessor()}{getPredecessor()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord.\+get\+Predecessor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Returns predecessor. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_ab07c08ba6088ef880eaf4ebae8281c51}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a0a677ced19cc0cb5afd2a695977aeb95}{}\label{class_chord_a0a677ced19cc0cb5afd2a695977aeb95} 
+\index{Chord@{Chord}!is\+Alive@{is\+Alive}}
+\index{is\+Alive@{is\+Alive}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{is\+Alive()}{isAlive()}}
+{\footnotesize\ttfamily boolean Chord.\+is\+Alive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Returns if I\textquotesingle{}m alive. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a8165b3fb53905e657c70b66223197561}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a711a8c4e621940da4c48c1ba60479bd7}{}\label{class_chord_a711a8c4e621940da4c48c1ba60479bd7} 
+\index{Chord@{Chord}!is\+Key\+In\+Open\+Interval@{is\+Key\+In\+Open\+Interval}}
+\index{is\+Key\+In\+Open\+Interval@{is\+Key\+In\+Open\+Interval}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{is\+Key\+In\+Open\+Interval()}{isKeyInOpenInterval()}}
+{\footnotesize\ttfamily Boolean Chord.\+is\+Key\+In\+Open\+Interval (\begin{DoxyParamCaption}\item[{int}]{key,  }\item[{int}]{key1,  }\item[{int}]{key2 }\end{DoxyParamCaption})}
+
+
+
+Checks if the key is in Open Interval. 
+
+\hypertarget{class_chord_ad88edc3a01395c31dd0ae209195a2e08}{}\label{class_chord_ad88edc3a01395c31dd0ae209195a2e08} 
+\index{Chord@{Chord}!is\+Key\+In\+Semi\+Close\+Interval@{is\+Key\+In\+Semi\+Close\+Interval}}
+\index{is\+Key\+In\+Semi\+Close\+Interval@{is\+Key\+In\+Semi\+Close\+Interval}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{is\+Key\+In\+Semi\+Close\+Interval()}{isKeyInSemiCloseInterval()}}
+{\footnotesize\ttfamily Boolean Chord.\+is\+Key\+In\+Semi\+Close\+Interval (\begin{DoxyParamCaption}\item[{int}]{key,  }\item[{int}]{key1,  }\item[{int}]{key2 }\end{DoxyParamCaption})}
+
+
+
+Checks if the Key is in a Semi Close interval. 
+
+\hypertarget{class_chord_ace0b8d2768590d7527af155c6573cae7}{}\label{class_chord_ace0b8d2768590d7527af155c6573cae7} 
+\index{Chord@{Chord}!join\+Ring@{join\+Ring}}
+\index{join\+Ring@{join\+Ring}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{join\+Ring()}{joinRing()}}
+{\footnotesize\ttfamily void Chord.\+join\+Ring (\begin{DoxyParamCaption}\item[{String}]{ip,  }\item[{int}]{port }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Joins the ring. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_abc5a9483416a6b8ae7330b324869e236}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_aa1906d1d721280b3a10a7754f604990a}{}\label{class_chord_aa1906d1d721280b3a10a7754f604990a} 
+\index{Chord@{Chord}!leave\+Ring@{leave\+Ring}}
+\index{leave\+Ring@{leave\+Ring}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{leave\+Ring()}{leaveRing()}}
+{\footnotesize\ttfamily void Chord.\+leave\+Ring (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Leaves the ring. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a6afa0f7ae38d68a936a85216fe33d5ae}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_aa53f4f7c97122395a33d064460538db0}{}\label{class_chord_aa53f4f7c97122395a33d064460538db0} 
+\index{Chord@{Chord}!locate\+Successor@{locate\+Successor}}
+\index{locate\+Successor@{locate\+Successor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{locate\+Successor()}{locateSuccessor()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord.\+locate\+Successor (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Locates successor. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a4e299d4b05537a4a07965dfe9f261fd0}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a4de8b8464782dd96d88deeb35b2f27a2}{}\label{class_chord_a4de8b8464782dd96d88deeb35b2f27a2} 
+\index{Chord@{Chord}!notify@{notify}}
+\index{notify@{notify}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{notify()}{notify()}}
+{\footnotesize\ttfamily void Chord.\+notify (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{j }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Notify checks if my predecessor is null or if its an open interval with j and i if it is true for either then it copies those files to j\textquotesingle{}s repository. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_abbb77f94541073d79284d35f970e0eb4}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a88829ad2bea7d036256fd55dab5945fd}{}\label{class_chord_a88829ad2bea7d036256fd55dab5945fd} 
+\index{Chord@{Chord}!put@{put}}
+\index{put@{put}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily void Chord.\+put (\begin{DoxyParamCaption}\item[{int}]{guid,  }\item[{Input\+Stream}]{file }\end{DoxyParamCaption}) throws Remote\+Exception, File\+Not\+Found\+Exception, I\+O\+Exception}
+
+
+
+Gets the file and puts it in my repository. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a59a01f2e913b6b2e4b60ba0b77c90eba}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a2fd46745a549fb8447f2cb7e32e8b07b}{}\label{class_chord_a2fd46745a549fb8447f2cb7e32e8b07b} 
+\index{Chord@{Chord}!rmi\+Chord@{rmi\+Chord}}
+\index{rmi\+Chord@{rmi\+Chord}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{rmi\+Chord()}{rmiChord()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord.\+rmi\+Chord (\begin{DoxyParamCaption}\item[{String}]{ip,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Makes the \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} object accessable remotely. 
+
+\hypertarget{class_chord_a03cd68070e7cf5a96e015773df7ab034}{}\label{class_chord_a03cd68070e7cf5a96e015773df7ab034} 
+\index{Chord@{Chord}!set\+Predeccesor@{set\+Predeccesor}}
+\index{set\+Predeccesor@{set\+Predeccesor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{set\+Predeccesor()}{setPredeccesor()}}
+{\footnotesize\ttfamily void Chord.\+set\+Predeccesor (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{m }\end{DoxyParamCaption})}
+
+
+
+Sets Predecessor. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_a28e2eda3267e1eaa8abec8adcf2604bb}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a7de61846981d5fd1b7a9b8a6c653dc76}{}\label{class_chord_a7de61846981d5fd1b7a9b8a6c653dc76} 
+\index{Chord@{Chord}!set\+Successor@{set\+Successor}}
+\index{set\+Successor@{set\+Successor}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{set\+Successor()}{setSuccessor()}}
+{\footnotesize\ttfamily void Chord.\+set\+Successor (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{m }\end{DoxyParamCaption})}
+
+
+
+Sets Successor. 
+
+
+
+Implements \hyperlink{interface_chord_message_interface_af6194ad846851fe7a8bd5f6bc8d36163}{Chord\+Message\+Interface}.
+
+\hypertarget{class_chord_a8616150947d5fa4095187325bc9f8a60}{}\label{class_chord_a8616150947d5fa4095187325bc9f8a60} 
+\index{Chord@{Chord}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{shutdown()}{shutdown()}}
+{\footnotesize\ttfamily void Chord.\+shutdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+\hyperlink{class_shutdown}{Shutdown} Function for Control + C command. 
+
+
+
+Implements \hyperlink{interface_shutdown_interface_a16c9cfd61247e825a49564a4daab3286}{Shutdown\+Interface}.
+
+\hypertarget{class_chord_a8a4b7a1cd88cb3f607ada0629f2ff2dd}{}\label{class_chord_a8a4b7a1cd88cb3f607ada0629f2ff2dd} 
+\index{Chord@{Chord}!stabilize@{stabilize}}
+\index{stabilize@{stabilize}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{stabilize()}{stabilize()}}
+{\footnotesize\ttfamily void Chord.\+stabilize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stabilizes the successor and make sure that files in the repository are up to date. 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_chord_a864e0b4011dc157c78a06dd951c6d9ac}{}\label{class_chord_a864e0b4011dc157c78a06dd951c6d9ac} 
+\index{Chord@{Chord}!M@{M}}
+\index{M@{M}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{M}{M}}
+{\footnotesize\ttfamily final int Chord.\+M = 2\hspace{0.3cm}{\ttfamily [static]}}
+
+\hypertarget{class_chord_a41961ec2d829d7a2c765fe7f8a23a64c}{}\label{class_chord_a41961ec2d829d7a2c765fe7f8a23a64c} 
+\index{Chord@{Chord}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!Chord@{Chord}}
+\subsubsection{\texorpdfstring{shutdown}{shutdown}}
+{\footnotesize\ttfamily \hyperlink{class_shutdown}{Shutdown} Chord.\+shutdown\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_chord_8java}{Chord.\+java}\end{DoxyCompactItemize}

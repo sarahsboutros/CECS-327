@@ -1,0 +1,175 @@
+\hypertarget{interface_chord_message_interface}{}\section{Chord\+Message\+Interface Interface Reference}
+\label{interface_chord_message_interface}\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+Inheritance diagram for Chord\+Message\+Interface\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{interface_chord_message_interface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{interface_chord_message_interface_ab07c08ba6088ef880eaf4ebae8281c51}{get\+Predecessor} ()  throws Remote\+Exception
+\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{interface_chord_message_interface_a4e299d4b05537a4a07965dfe9f261fd0}{locate\+Successor} (int key)  throws Remote\+Exception
+\item 
+\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} \hyperlink{interface_chord_message_interface_a7f47e9d5144a2af6904135bc05dfe8fd}{closest\+Preceding\+Node} (int key)  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_abc5a9483416a6b8ae7330b324869e236}{join\+Ring} (String Ip, int port)  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_a6afa0f7ae38d68a936a85216fe33d5ae}{leave\+Ring} ()  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_af6194ad846851fe7a8bd5f6bc8d36163}{set\+Successor} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} p)  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_a28e2eda3267e1eaa8abec8adcf2604bb}{set\+Predeccesor} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} s)  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_abbb77f94541073d79284d35f970e0eb4}{notify} (\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} j)  throws Remote\+Exception
+\item 
+boolean \hyperlink{interface_chord_message_interface_a8165b3fb53905e657c70b66223197561}{is\+Alive} ()  throws Remote\+Exception
+\item 
+int \hyperlink{interface_chord_message_interface_acead95d9a7196f05b656462ab78138eb}{get\+Id} ()  throws Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_a59a01f2e913b6b2e4b60ba0b77c90eba}{put} (int guid, Input\+Stream file)  throws I\+O\+Exception, Remote\+Exception
+\item 
+Input\+Stream \hyperlink{interface_chord_message_interface_a4cdb461c48fe643f4fb5fa420d017eb3}{get} (int id)  throws I\+O\+Exception, Remote\+Exception
+\item 
+void \hyperlink{interface_chord_message_interface_ab4d46beae8cea347c827b5618ea16104}{delete} (int id)  throws I\+O\+Exception, Remote\+Exception
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_chord_message_interface_a7f47e9d5144a2af6904135bc05dfe8fd}{}\label{interface_chord_message_interface_a7f47e9d5144a2af6904135bc05dfe8fd} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!closest\+Preceding\+Node@{closest\+Preceding\+Node}}
+\index{closest\+Preceding\+Node@{closest\+Preceding\+Node}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{closest\+Preceding\+Node()}{closestPrecedingNode()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord\+Message\+Interface.\+closest\+Preceding\+Node (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a77a9443c945cf5482f59edf685c1dc70}{Chord}.
+
+\hypertarget{interface_chord_message_interface_ab4d46beae8cea347c827b5618ea16104}{}\label{interface_chord_message_interface_ab4d46beae8cea347c827b5618ea16104} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!delete@{delete}}
+\index{delete@{delete}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+delete (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption}) throws I\+O\+Exception, Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a83d9245c283baf440dc847cee154c8c6}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a4cdb461c48fe643f4fb5fa420d017eb3}{}\label{interface_chord_message_interface_a4cdb461c48fe643f4fb5fa420d017eb3} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!get@{get}}
+\index{get@{get}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily Input\+Stream Chord\+Message\+Interface.\+get (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption}) throws I\+O\+Exception, Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a0425685114bc996226e87f417221c213}{Chord}.
+
+\hypertarget{interface_chord_message_interface_acead95d9a7196f05b656462ab78138eb}{}\label{interface_chord_message_interface_acead95d9a7196f05b656462ab78138eb} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!get\+Id@{get\+Id}}
+\index{get\+Id@{get\+Id}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{get\+Id()}{getId()}}
+{\footnotesize\ttfamily int Chord\+Message\+Interface.\+get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a7c6a50aff653bafc040f923c93061bdb}{Chord}.
+
+\hypertarget{interface_chord_message_interface_ab07c08ba6088ef880eaf4ebae8281c51}{}\label{interface_chord_message_interface_ab07c08ba6088ef880eaf4ebae8281c51} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!get\+Predecessor@{get\+Predecessor}}
+\index{get\+Predecessor@{get\+Predecessor}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{get\+Predecessor()}{getPredecessor()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord\+Message\+Interface.\+get\+Predecessor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a3f1aadce3820e808c80662bb61a58e34}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a8165b3fb53905e657c70b66223197561}{}\label{interface_chord_message_interface_a8165b3fb53905e657c70b66223197561} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!is\+Alive@{is\+Alive}}
+\index{is\+Alive@{is\+Alive}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{is\+Alive()}{isAlive()}}
+{\footnotesize\ttfamily boolean Chord\+Message\+Interface.\+is\+Alive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a0a677ced19cc0cb5afd2a695977aeb95}{Chord}.
+
+\hypertarget{interface_chord_message_interface_abc5a9483416a6b8ae7330b324869e236}{}\label{interface_chord_message_interface_abc5a9483416a6b8ae7330b324869e236} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!join\+Ring@{join\+Ring}}
+\index{join\+Ring@{join\+Ring}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{join\+Ring()}{joinRing()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+join\+Ring (\begin{DoxyParamCaption}\item[{String}]{Ip,  }\item[{int}]{port }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_ace0b8d2768590d7527af155c6573cae7}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a6afa0f7ae38d68a936a85216fe33d5ae}{}\label{interface_chord_message_interface_a6afa0f7ae38d68a936a85216fe33d5ae} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!leave\+Ring@{leave\+Ring}}
+\index{leave\+Ring@{leave\+Ring}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{leave\+Ring()}{leaveRing()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+leave\+Ring (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_aa1906d1d721280b3a10a7754f604990a}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a4e299d4b05537a4a07965dfe9f261fd0}{}\label{interface_chord_message_interface_a4e299d4b05537a4a07965dfe9f261fd0} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!locate\+Successor@{locate\+Successor}}
+\index{locate\+Successor@{locate\+Successor}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{locate\+Successor()}{locateSuccessor()}}
+{\footnotesize\ttfamily \hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface} Chord\+Message\+Interface.\+locate\+Successor (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_aa53f4f7c97122395a33d064460538db0}{Chord}.
+
+\hypertarget{interface_chord_message_interface_abbb77f94541073d79284d35f970e0eb4}{}\label{interface_chord_message_interface_abbb77f94541073d79284d35f970e0eb4} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!notify@{notify}}
+\index{notify@{notify}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{notify()}{notify()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+notify (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{j }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a4de8b8464782dd96d88deeb35b2f27a2}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a59a01f2e913b6b2e4b60ba0b77c90eba}{}\label{interface_chord_message_interface_a59a01f2e913b6b2e4b60ba0b77c90eba} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!put@{put}}
+\index{put@{put}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+put (\begin{DoxyParamCaption}\item[{int}]{guid,  }\item[{Input\+Stream}]{file }\end{DoxyParamCaption}) throws I\+O\+Exception, Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a88829ad2bea7d036256fd55dab5945fd}{Chord}.
+
+\hypertarget{interface_chord_message_interface_a28e2eda3267e1eaa8abec8adcf2604bb}{}\label{interface_chord_message_interface_a28e2eda3267e1eaa8abec8adcf2604bb} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!set\+Predeccesor@{set\+Predeccesor}}
+\index{set\+Predeccesor@{set\+Predeccesor}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{set\+Predeccesor()}{setPredeccesor()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+set\+Predeccesor (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{s }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a03cd68070e7cf5a96e015773df7ab034}{Chord}.
+
+\hypertarget{interface_chord_message_interface_af6194ad846851fe7a8bd5f6bc8d36163}{}\label{interface_chord_message_interface_af6194ad846851fe7a8bd5f6bc8d36163} 
+\index{Chord\+Message\+Interface@{Chord\+Message\+Interface}!set\+Successor@{set\+Successor}}
+\index{set\+Successor@{set\+Successor}!Chord\+Message\+Interface@{Chord\+Message\+Interface}}
+\subsubsection{\texorpdfstring{set\+Successor()}{setSuccessor()}}
+{\footnotesize\ttfamily void Chord\+Message\+Interface.\+set\+Successor (\begin{DoxyParamCaption}\item[{\hyperlink{interface_chord_message_interface}{Chord\+Message\+Interface}}]{p }\end{DoxyParamCaption}) throws Remote\+Exception}
+
+
+
+Implemented in \hyperlink{class_chord_a7de61846981d5fd1b7a9b8a6c653dc76}{Chord}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_chord_message_interface_8java}{Chord\+Message\+Interface.\+java}\end{DoxyCompactItemize}
