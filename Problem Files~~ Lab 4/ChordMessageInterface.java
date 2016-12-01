@@ -27,5 +27,4 @@ public interface ChordMessageInterface extends Remote
     public void doAbort(Transaction t,int guid) throws RemoteException;
     public void haveCommitted(Transaction t) throws RemoteException;
     public void getDecision(Transaction t, int guid) throws RemoteException;
-    public boolean dummy(Transaction t);
 }
