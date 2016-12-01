@@ -43,10 +43,27 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     int three = md5(f+3) %(peers.size());
 
     Transaction transaction = new Transaction(Transaction.Operation.WRITE,file);
-    transaction.creator = this;
     transaction.guid = md5(f) %(peers.size());
-    transaction.writtenTime = lastWritten.get(transaction.guid);
-    transaction.readTime = lastRead.get(transaction.guid);
+    if(lastWritten.containsKey(transaction.guid))
+    {
+      transaction.writtenTime = lastWritten.get(transaction.guid);
+    }
+    else{
+      File filef = new File(path);
+      transaction.writtenTime = filef.lastModified();
+      lastWritten.put(transaction.guid,filef.lastModified());
+    }
+    if(lastRead.containsKey(transaction.guid))
+    {
+      transaction.readTime = lastRead.get(transaction.guid);
+    }
+    else
+    {
+      File filef = new File(path);
+      transaction.readTime = filef.lastModified();
+      lastRead.put(transaction.guid,filef.lastModified());
+    }
+
     TransactionsCreated.put(transaction, 0);
     //        Chord peerone = (Chord)peers.get(one);
     //        Chord peertwo = (Chord)peers.get(two);
@@ -433,7 +450,8 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
   }
   catch(FileNotFoundException|EOFException e)
   {
-
+      lastRead = new HashMap<Integer,Long>();
+      lastWritten = new HashMap<Integer,Long>();
   }
 
     for (j=0;j<M; j++)

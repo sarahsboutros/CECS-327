@@ -9,7 +9,6 @@ public class Transaction implements Serializable  {
   Operation op;
   Vote vote;
   FileStream fileStream;
-  Chord creator;
   Long writtenTime;
   Long readTime;
   public Transaction(Operation op, FileStream file)
