@@ -24,26 +24,29 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     ChordMessageInterface successor;
     ChordMessageInterface predecessor;
     ChordMessageInterface[] finger;
-    HashMap<String,Transaction> TransactionsReceived;
+    HashMap<Transaction,Integer> TransactionsReceived;
     HashMap<Transaction, Integer> TransactionsCreated;
-
+    HashMap<Integer,Long> lastRead;
+    HashMap<Integer,Long> lastWritten;
 
     int nextFinger;
     int i;   		// GUID
 
-    public void write(int f, Chord c) throws IOException, NoSuchAlgorithmException {
-        String path = "./"+  c.i +"/repository/"+f; // path to file
+    public void write(String f, Chord c) throws IOException, NoSuchAlgorithmException {
+        String path = "./"+  c.i +"/workdir/"+f; // path to file
         FileStream file = new FileStream(path);
 
-        //ChordMessageInterface peer = c.locateSuccessor(f);
 
-        int one = md5(Integer.toString(f+1)) % (peers.size());
-        int two = md5(Integer.toString(f+2)) % (peers.size());
-        int three = md5(Integer.toString(f+3)) %(peers.size());
+        //ChordMessageInterface peer = c.locateSuccessor(f);
+        int one = md5(f+1) % (peers.size());
+        int two = md5(f+2) % (peers.size());
+        int three = md5(f+3) %(peers.size());
 
         Transaction transaction = new Transaction(Transaction.Operation.WRITE,file);
         transaction.creator = this;
-        transaction.guid = this.i;
+        transaction.guid = md5(f) %(peers.size());
+        transaction.writtenTime = lastWritten.get(transaction.guid);
+        transaction.readTime = lastRead.get(transaction.guid);
         TransactionsCreated.put(transaction, 0);
         //        Chord peerone = (Chord)peers.get(one);
         //        Chord peertwo = (Chord)peers.get(two);
@@ -56,36 +59,36 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         boolean voteone,votetwo,votethree;
         System.out.println(peerone.getId());
    //     peerone.dummy(transaction);
- //       peerone.canCommit(transaction);
-//        votetwo = peertwo.canCommit(transaction);
-//        votethree = peerthree.canCommit(transaction);
-//
-//        if(voteone == true
-//                && votetwo == true
-//                && votethree == true)
-//        {
-//            peerone.doCommit(transaction);
-//            peertwo.doCommit(transaction);
-//            peerthree.doCommit(transaction);
-//        }
-//        else
-//        {
-//            if(voteone == true)
-//            {
-//                peerone.doAbort(transaction);
-//            }
-//            if(votetwo == true)
-//            {
-//                peertwo.doAbort(transaction);
-//            }
-//            if(votethree == true)
-//            {
-//                peerthree.doAbort(transaction);
-//            }
+       voteone = peerone.canCommit(transaction,one);
+       votetwo = peertwo.canCommit(transaction,two);
+       votethree = peerthree.canCommit(transaction,three);
 
-//        }
+       if(voteone == true
+               && votetwo == true
+               && votethree == true)
+       {
+           peerone.doCommit(transaction,one);
+           peertwo.doCommit(transaction,two);
+           peerthree.doCommit(transaction,three);
+       }
+       else
+       {
+               peerone.doAbort(transaction,one);
+               peertwo.doAbort(transaction,two);
+               peerthree.doAbort(transaction,three);
+
+
+       }
 
 //peer.put(f, file); // put file into ring
+    }
+    public InputStream read(String f) throws IOException,NoSuchAlgorithmException
+    {
+      int guidone = md5(f+1) % (peers.size());
+      int guid = md5(f) % (peers.size());
+      lastRead.put(guid,(new Date().getTime()));
+      		  ChordMessageInterface peer = locateSuccessor(guidone);
+            return peer.get(guidone); // put file into ring
     }
     public int md5(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException
     {
@@ -412,18 +415,27 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         }
     }
 
-    public Chord(int port) throws RemoteException {
+    public Chord(int port) throws RemoteException,IOException,ClassNotFoundException {
         int j;
+        System.out.println("");
         finger = new ChordMessageInterface[M];
         peers = new ArrayList<ChordMessageInterface>();
-        TransactionsReceived = new HashMap<String,Transaction>();
+        TransactionsReceived = new HashMap<Transaction,Integer>();
         TransactionsCreated = new HashMap<Transaction,Integer>();
+        String pathread = "./"+port+"/system/read";
+        String pathwrite = "./"+port+"/system/write";
+        ObjectInputStream read = new ObjectInputStream(new FileInputStream(pathread));
+        lastRead = (HashMap<Integer,Long>)read.readObject();
+
+        ObjectInputStream write = new ObjectInputStream(new FileInputStream(pathwrite));
+        lastWritten = (HashMap<Integer,Long>)write.readObject();
+
         for (j=0;j<M; j++)
         {
             finger[j] = null;
         }
         i = port;
-
+        System.out.println(port);
         predecessor = null;
         successor = this;
         Timer timer = new Timer();
@@ -433,14 +445,14 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
                 stabilize();
                 checkPredecessor();
                 fixFingers();
-                for (Map.Entry<String, Transaction> entry : TransactionsReceived.entrySet())
-                {
-                    try {
-                        getDecision(entry.getValue());
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(Chord.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                // for (Map.Entry<String, Transaction> entry : TransactionsReceived.entrySet())
+                // {
+                //     try {
+                //         getDecision(entry.getValue());
+                //     } catch (RemoteException ex) {
+                //         Logger.getLogger(Chord.class.getName()).log(Level.SEVERE, null, ex);
+                //     }
+                // }
             }
         }, 500, 500);
         try{
@@ -454,6 +466,17 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         }
     }
 
+     protected void finalize() throws FileNotFoundException,IOException
+     {
+       String pathread = "./"+i+"/system/read";
+       String pathwrite = "./"+i+"/system/write";
+
+       ObjectOutputStream read = new ObjectOutputStream(new FileOutputStream(pathread));
+       read.writeObject(lastRead);
+
+       ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(pathwrite));
+       write.writeObject(lastWritten);
+     }
     void Print()
     {
         int i;
@@ -498,7 +521,7 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
 
     @Override
-    public boolean canCommit(Transaction t) throws RemoteException,FileNotFoundException
+    public boolean canCommit(Transaction t,int guid) throws RemoteException,FileNotFoundException
     {
 //        Long date = new Date().getTime();
         try {
@@ -512,24 +535,31 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         }
 
 
-        String pathtocheck = "./"+i+"/repository/" + t.guid;
+        String pathtocheck = "./"+i+"/repository/" + guid;
+        long lR = lastRead.get(t.guid);
+        long lW = lastWritten.get(t.guid);
 
-        if (TransactionsReceived.containsKey(pathtocheck))
+
+        if (!TransactionsReceived.containsKey(pathtocheck) ||
+        ((lW < t.readTime) && (lW < t.writtenTime)))
         {
-            return false;
+            TransactionsReceived.put(t,guid);
+            return true;
         }
         else
         {
-            TransactionsReceived.put(pathtocheck,t);
-            return true;
+
+            return false;
         }
+
 
     }
 
     @Override
-    public void doCommit(Transaction t) throws RemoteException
+    public void doCommit(Transaction t,int guid) throws RemoteException
     {
-
+      put(guid, t.fileStream);
+      lastWritten.put(t.guid,(new Date()).getTime());
         String fileName = "./"+i+"/repository/" + t.guid;
         try {
 
@@ -540,12 +570,13 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         {
             System.out.println(e);
         }
+
         TransactionsReceived.remove(fileName, t);
         haveCommitted(t);
     }
 
     @Override
-    public void doAbort(Transaction t) throws RemoteException
+    public void doAbort(Transaction t,int guid) throws RemoteException
     {
         String fileName = "./"+i+"/temp/"+t.guid;
         File file = new File(fileName);
@@ -573,24 +604,24 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
 
     @Override
-    public void getDecision(Transaction t) throws RemoteException
+    public void getDecision(Transaction t,int guid) throws RemoteException
     {
         Chord  coordinator = t.creator;
         if(coordinator.TransactionsCreated.containsKey(t))
         {
             if(t.vote == Transaction.Vote.YES)
             {
-                this.doCommit(t);
+                this.doCommit(t,guid);
             }
             else
             {
-                this.doAbort(t);
+                this.doAbort(t,guid);
 
             }
         }
         else
         {
-            this.doAbort(t);
+            this.doAbort(t,guid);
         }
     }
     public boolean dummy(Transaction t)

@@ -10,6 +10,8 @@ public class Transaction implements Serializable  {
   Vote vote;
   FileStream fileStream;
   Chord creator;
+  Long writtenTime;
+  Long readTime;
   public Transaction(Operation op, FileStream file)
   {
   	//id = md5(date + ip+port);

@@ -13,7 +13,7 @@ public interface ChordMessageInterface extends Remote
     public int getId() throws RemoteException;
     public void setSuccessor(ChordMessageInterface m) throws RemoteException;
     public void setPredecessor(ChordMessageInterface m) throws RemoteException;
-   
+
     public int getPeerSize() throws RemoteException;
     public ArrayList<ChordMessageInterface> getPeers() throws RemoteException;
 
@@ -21,11 +21,11 @@ public interface ChordMessageInterface extends Remote
     public InputStream get(int id) throws IOException, RemoteException;
     public void delete(int id) throws IOException, RemoteException;
     public void leaveRing() throws RemoteException;
- 
-    public boolean canCommit(Transaction t) throws RemoteException,FileNotFoundException;
-    public void doCommit(Transaction t) throws RemoteException;
-    public void doAbort(Transaction t) throws RemoteException;
+
+    public boolean canCommit(Transaction t, int guid) throws RemoteException,FileNotFoundException;
+    public void doCommit(Transaction t, int guid) throws RemoteException;
+    public void doAbort(Transaction t,int guid) throws RemoteException;
     public void haveCommitted(Transaction t) throws RemoteException;
-    public void getDecision(Transaction t) throws RemoteException;
+    public void getDecision(Transaction t, int guid) throws RemoteException;
     public boolean dummy(Transaction t);
 }
