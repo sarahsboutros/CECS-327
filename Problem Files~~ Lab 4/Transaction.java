@@ -4,10 +4,11 @@ import java.util.*;
 public class Transaction implements Serializable  {
   public enum Operation { WRITE, DELETE}
   public enum Vote { YES, NO }
-  Long TransactionId;
+  long TransactionId;
   Integer guid;
   Operation op;
   Vote vote;
+  ChordMessageInterface creator;
   FileStream fileStream;
   Long writtenTime;
   Long readTime;
@@ -19,4 +20,25 @@ public class Transaction implements Serializable  {
     TransactionId = (new Date()).getTime();
   }
 
+  public void setCoordinator(Chord c)
+  {
+    creator = c;
+  }
+  public ChordMessageInterface getCoordinator()
+  {
+    return creator;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    return(this.TransactionId == ((Transaction)obj).TransactionId);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    int t = (int) TransactionId;
+    return t;
+  }
 }

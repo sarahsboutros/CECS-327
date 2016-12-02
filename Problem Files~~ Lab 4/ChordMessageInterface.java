@@ -23,8 +23,9 @@ public interface ChordMessageInterface extends Remote
     public void leaveRing() throws RemoteException;
 
     public boolean canCommit(Transaction t, int guid) throws RemoteException,FileNotFoundException;
-    public void doCommit(Transaction t, int guid) throws RemoteException;
+    public void doCommit(Transaction t, int guid,ChordMessageInterface c) throws RemoteException;
     public void doAbort(Transaction t,int guid) throws RemoteException;
     public void haveCommitted(Transaction t) throws RemoteException;
     public void getDecision(Transaction t, int guid) throws RemoteException;
+    public boolean TransactionsCreatedContainsKey(Transaction t) throws RemoteException;
 }

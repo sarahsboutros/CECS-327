@@ -44,6 +44,7 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
 
     Transaction transaction = new Transaction(Transaction.Operation.WRITE,file);
     transaction.guid = md5(f) %(peers.size());
+    transaction.creator = this;
     if(lastWritten.containsKey(transaction.guid))
     {
       transaction.writtenTime = lastWritten.get(transaction.guid);
@@ -84,9 +85,9 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     && votetwo == true
     && votethree == true)
     {
-      peerone.doCommit(transaction,one);
-      peertwo.doCommit(transaction,two);
-      peerthree.doCommit(transaction,three);
+      peerone.doCommit(transaction,one,c);
+      peertwo.doCommit(transaction,two,c);
+      peerthree.doCommit(transaction,three,c);
     }
     else
     {
@@ -560,27 +561,34 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
 
 
     String pathtocheck = "./"+i+"/repository/" + guid;
-    long lR = lastRead.get(t.guid);
-    long lW = lastWritten.get(t.guid);
-
-
-    if (!TransactionsReceived.containsKey(pathtocheck) ||
-    ((lW < t.readTime) && (lW < t.writtenTime)))
+    long lR,lW;
+    if (!lastRead.isEmpty() && !lastWritten.isEmpty())
     {
-      TransactionsReceived.put(t,guid);
-      return true;
+      lR = lastRead.get(t.guid);
+      lW = lastWritten.get(t.guid);
+      if (!TransactionsReceived.containsKey(pathtocheck) ||
+      ((lW < t.readTime) && (lW < t.writtenTime)))
+      {
+        TransactionsReceived.put(t,guid);
+        return true;
+      }
+      else
+      {
+
+        return false;
+      }
     }
-    else
+    else if(lastRead.isEmpty() || lastWritten.isEmpty())
     {
-
-      return false;
+        return true;
     }
 
+    return false;
 
   }
 
   @Override
-  public void doCommit(Transaction t,int guid) throws RemoteException
+  public void doCommit(Transaction t,int guid,ChordMessageInterface c) throws RemoteException
   {
     put(guid, t.fileStream);
     lastWritten.put(t.guid,(new Date()).getTime());
@@ -596,7 +604,7 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
 
     TransactionsReceived.remove(fileName, t);
-    haveCommitted(t);
+    c.haveCommitted(t);
   }
 
   @Override
@@ -610,32 +618,32 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
 
   @Override
   public void haveCommitted(Transaction t) throws RemoteException {
-    Chord coordinator = t.creator;
-
-    int count = coordinator.TransactionsCreated.get(t);
 
 
+    int count = TransactionsCreated.get(t);
 
     if(count+1 >=3)
     {
-      coordinator.TransactionsCreated.remove(t);
+      TransactionsCreated.remove(t);
     }
     else
     {
-      coordinator.TransactionsCreated.replace(t,count + 1);
+      TransactionsCreated.replace(t,count + 1);
     }
     // return t.TransactionId.longValue() < p.TransactionId.longValue();
   }
 
+
   @Override
   public void getDecision(Transaction t,int guid) throws RemoteException
   {
-    Chord  coordinator = t.creator;
-    if(coordinator.TransactionsCreated.containsKey(t))
+    ChordMessageInterface c = t.getCoordinator();
+
+    if(c.TransactionsCreatedContainsKey(t))
     {
       if(t.vote == Transaction.Vote.YES)
       {
-        this.doCommit(t,guid);
+        this.doCommit(t,guid,c);
       }
       else
       {
@@ -648,9 +656,11 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
       this.doAbort(t,guid);
     }
   }
-  public boolean dummy(Transaction t)
+
+  public boolean TransactionsCreatedContainsKey(Transaction t) throws RemoteException
   {
-    return true;
+      return TransactionsCreated.containsKey(t);
   }
+
 
 }
